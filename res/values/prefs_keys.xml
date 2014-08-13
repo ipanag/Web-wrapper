@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="prefs_key_js_enabled">js_enabled</string>
+    <string name="prefs_key_action_bar">show_action_bar</string>
+    <string name="prefs_key_open_same_host">open_same_host_link</string>
+    <string name="prefs_key_open_other_host">open_other_host_link</string>
+    <string name="prefs_key_ignore_ssl_error">ignore_ssl_error</string>
+    <string name="prefs_key_built_in_zoom">built_in_zoom_ctrls</string>
+    <string name="prefs_key_display_zoom">display_zoom_ctrls</string>
+    
+</resources>

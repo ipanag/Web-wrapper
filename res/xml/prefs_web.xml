@@ -1,0 +1,40 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_js_enabled"
+        android:title="@string/prefs_js_enabled"
+        />
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_action_bar"
+        android:title="@string/prefs_action_bar"
+        />
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_open_same_host"
+        android:title="@string/prefs_open_same_host"
+        />
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_open_other_host"
+        android:title="@string/prefs_open_other_host"
+        />
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_ignore_ssl_error"
+        android:title="@string/prefs_ignore_ssl_error"
+        />
+
+    <CheckBoxPreference
+        android:key="@string/prefs_key_built_in_zoom"
+        android:title="@string/prefs_built_in_zoom"
+        />
+    
+    <CheckBoxPreference
+        android:key="@string/prefs_key_display_zoom"
+        android:title="@string/prefs_display_zoom"
+        />
+
+</PreferenceScreen>

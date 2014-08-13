@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Web wrapper</string>
+    
+    <string name="authentication_check">Authentication required</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="go_button">Open website</string>
+    <string name="input_url_hint">Website URL</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh</string>
+    
+    <!-- Settings -->    
+    <string name="prefs_js_enabled">Allow Javascript</string>
+    <string name="prefs_action_bar">Show action bar</string>
+    <string name="prefs_open_same_host">Load same host links</string>
+    <string name="prefs_open_other_host">Load other hosts links</string>
+    <string name="prefs_ignore_ssl_error">Ignore SSL error</string>
+    <string name="prefs_built_in_zoom">Use pinch zoom</string>
+    <string name="prefs_display_zoom">Display zoom controls</string>
+    
+</resources>
