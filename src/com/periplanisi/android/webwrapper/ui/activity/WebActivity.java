@@ -1,8 +1,5 @@
 package com.periplanisi.android.webwrapper.ui.activity;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.periplanisi.android.webwrapper.R;
@@ -39,7 +35,7 @@ public class WebActivity extends BaseActivity implements WebPageLoadListener {
 	private static final String PASS_KEY = "pass_key";
 	
 	private WebView webView;
-	private WebViewClient webClient;
+	private WrapperWebViewClient webClient;
 	private SettingsHelper settingsHelper;
 	private TextView errorView;
 	private View loadingView;
@@ -89,16 +85,9 @@ public class WebActivity extends BaseActivity implements WebPageLoadListener {
 		String url = getIntent().getStringExtra(URL_KEY);
 		boolean authRequired = getIntent().getBooleanExtra(AUTH_KEY, false);
 		if(authRequired) {
-			URI uri;
-			try {
-				uri = new URI(url);
-				String host = uri.getHost();
-				String username = getIntent().getStringExtra(USER_KEY);
-				String password = getIntent().getStringExtra(PASS_KEY);
-				webView.setHttpAuthUsernamePassword(host, "", username, password);
-			} catch (URISyntaxException e) {
-				// Do nothing
-			}
+			String username = getIntent().getStringExtra(USER_KEY);
+			String password = getIntent().getStringExtra(PASS_KEY);
+			webClient.setUsernamePassword(username, password);
 		}
 		
 		webView.loadUrl(url);
