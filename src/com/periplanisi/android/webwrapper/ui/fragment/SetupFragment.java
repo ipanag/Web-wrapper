@@ -30,6 +30,9 @@ public class SetupFragment extends Fragment implements OnClickListener, TextWatc
 
 	private static final String PREFS = "prefs_setup_screen";
 	private static final String URL_KEY = "last_used_url";
+	private static final String AUTH_KEY = "last_used_auth_key";
+	private static final String USER_KEY = "last_used_user_key";
+	private static final String PASS_KEY = "last_used_pass_key";
 	
 	private static final String DEFAULT_URL = "http://beta.html5test.com/";
 	
@@ -57,10 +60,19 @@ public class SetupFragment extends Fragment implements OnClickListener, TextWatc
 		prefs = getActivity().getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
 		
 		String url = DEFAULT_URL;
+		boolean isAuthRequired = false;
+		String username = null;
+		String password = null;
 		if(savedInstanceState != null && savedInstanceState.containsKey(URL_KEY)) {
 			url = savedInstanceState.getString(URL_KEY);
+			isAuthRequired = savedInstanceState.getBoolean(AUTH_KEY, isAuthRequired);
+			username = savedInstanceState.getString(USER_KEY);
+			password = savedInstanceState.getString(PASS_KEY);
 		} else {
 			url = prefs.getString(URL_KEY, url);
+			isAuthRequired = prefs.getBoolean(AUTH_KEY, isAuthRequired);
+			username = prefs.getString(USER_KEY, username);
+			password = prefs.getString(PASS_KEY, password);
 		}
 		
 		inputView.setText(url);
@@ -69,6 +81,13 @@ public class SetupFragment extends Fragment implements OnClickListener, TextWatc
 		authCheckBox = (CheckBox) rootView.findViewById(R.id.auth_check);
 		usernameView = (EditText) rootView.findViewById(R.id.username);
 		passwordView = (EditText) rootView.findViewById(R.id.password);
+		
+		authCheckBox.setChecked(isAuthRequired);
+		if(isAuthRequired) {
+			usernameView.setText(username);
+			passwordView.setText(password);
+		}
+		
 		updateAuth(authCheckBox.isChecked());
 		authCheckBox.setOnCheckedChangeListener(this);
 		
@@ -99,6 +118,9 @@ public class SetupFragment extends Fragment implements OnClickListener, TextWatc
 	public void onSaveInstanceState(Bundle outState) {
 		String url = inputView.getText().toString();
 		outState.putString(URL_KEY, url);
+		outState.putBoolean(AUTH_KEY, authCheckBox.isChecked());
+		outState.putString(USER_KEY, usernameView.getText().toString());
+		outState.putString(PASS_KEY, passwordView.getText().toString());
 		
 		super.onSaveInstanceState(outState);
 	}
@@ -109,7 +131,12 @@ public class SetupFragment extends Fragment implements OnClickListener, TextWatc
 		if(viewId == R.id.go_button) {
 			// store url for next launch
 			String url = inputView.getText().toString();
-			prefs.edit().putString(URL_KEY, url).commit();
+			prefs.edit()
+			.putString(URL_KEY, url)
+			.putBoolean(AUTH_KEY, authCheckBox.isChecked())
+			.putString(USER_KEY, usernameView.getText().toString())
+			.putString(PASS_KEY, passwordView.getText().toString())
+			.commit();
 			
 			// start webview
 			Intent intent = WebActivity.getStartIntent(getActivity(), url, authCheckBox.isChecked(),
