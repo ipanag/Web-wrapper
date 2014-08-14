@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.util.Log;
+import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,6 +29,7 @@ public class WrapperWebViewClient extends WebViewClient {
 	private String loadUrl;
 	private SettingsHelper settingsHelper;
 	private boolean loading = false;
+	private String username, password;
 	
 	public WrapperWebViewClient(Activity activity, SettingsHelper settingsHelper) {
 		this.activityWeakRef = new WeakReference<Activity>(activity);
@@ -86,8 +88,6 @@ public class WrapperWebViewClient extends WebViewClient {
     
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
-    	super.onPageStarted(view, url, favicon);
-    	
     	Log.d(TAG, "onPageStarted: " + url);
     	
     	// update stored url, in case of redirection
@@ -102,8 +102,6 @@ public class WrapperWebViewClient extends WebViewClient {
     
     @Override
     public void onPageFinished(WebView view, String url) {
-    	super.onPageFinished(view, url);
-    	
     	Log.d(TAG, "onPageFinished: " + url);
     	
     	if(loading) {
@@ -118,8 +116,6 @@ public class WrapperWebViewClient extends WebViewClient {
     
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-    	super.onReceivedError(view, errorCode, description, failingUrl);
-    	
     	Log.w(TAG, "onReceivedError: " + failingUrl);
     	
     	loading = false;
@@ -139,4 +135,20 @@ public class WrapperWebViewClient extends WebViewClient {
     	}
     }
     
+    @Override
+    public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+    	Log.w(TAG, "onReceivedHttpAuthRequest: " + realm);
+    	
+    	if(username != null && password != null) {
+    	    handler.proceed(username, password);
+    	} else {
+    	    handler.cancel();
+    	}
+    }
+
+    public void setUsernamePassword(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
 }
